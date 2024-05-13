@@ -12,14 +12,14 @@ import java.util.Scanner;
 		double deposit = 0;
 		double transfer = 0;
 
-		ArrayList<Integer> listOfMoney = new ArrayList<>();
+		ArrayList<Customer> accounts = new ArrayList<>();
 
 		
 
 		System.out.println("Welcome to Lero's Banking Platform");
 	
 		
-			String Menu = """
+			String mainMenu = """
 			press
 				1-> Create an Account
 				2-> Close Account
@@ -29,10 +29,11 @@ import java.util.Scanner;
 				6-> Transfer from one account to another
 				7-> Change pin
 				
+				
 				""";
 			
 
-				System.out.println(Menu);
+				System.out.println(mainMenu);
 
 				
 
@@ -43,6 +44,8 @@ import java.util.Scanner;
 				int userInput = alero.nextInt();
 			
 				balance = deposit - withdraw;
+
+				
 			
 			switch(userInput) {
 				case 1 -> {
@@ -58,66 +61,65 @@ import java.util.Scanner;
 					int number = alero.nextInt();
 
 					System.out.println("Account opened successfully");
-				}
+				
+					}
 				
 	
-
 				case 2 -> {
 					System.out.println("Account successfully closed");
 				}
 				
 
-				//case 3:	
-					//System.out.println("Deposit money: ");
-				 	//deposit = alero.nextDouble();
+				case 3 -> {
+					System.out.println("Deposit money: ");
+				 	deposit = alero.nextDouble();
 				
-					//System.out.println("Balance : " + deposit);
+					System.out.println("Balance : " + deposit);
+				}
 				
-				//break;
 
-				//case 4:
-					//System.out.println("Withdraw money: ");
-		 			//withdraw = alero.nextDouble();
+				case 4 -> {
+					System.out.println("Withdraw money: ");
+		 			withdraw = alero.nextDouble();
 
-					//System.out.println("Balance: " + balance);
+					System.out.println("Balance: " + balance);
  
-				
-				//break;
+				}
 
-				//case 5:
-					//System.out.println("Check Account balance: " + balance);
+				case 5 -> {
+					System.out.println("Check Account balance: " + balance);
 				
-				//break;
+				}
 
-				//case 6:
-					//System.out.println("Amount to transfer: ");
-					//transfer = alero.nextInt();
+				case 6 -> {
+					System.out.println("Amount to transfer: ");
+					transfer = alero.nextInt();
 		
-					//System.out.println("Your balance is: " + balance);
+					System.out.println("Your balance is: " + balance);
 				
-				//break;
+				}
 
-				//case 7:
-					//System.out.println("Change pin: ");
-					//int pin = alero.nextInt();
+				case 7 -> {
+					System.out.println("Change pin: ");
+					int pin = alero.nextInt();
 
-					//System.out.println("Pin changed successfully");
+					System.out.println("Pin changed successfully");
 				
-				//break;
+				}
 
-				//case 8:
-				//System.out.print("Enter 0 to go back to menu: ");
-				//int numberEntered = alero.nextInt();
-				//if (numberEntered == 0){
-					//System.out.println(Menu);
+				case 8 -> {
+					System.out.print("Enter 0 to go back to mainMenu: ");
+					int numberEntered = alero.nextInt();
+					if (numberEntered == 0){
+					System.out.println(mainMenu);
 
-					//System.out.println("Enter your preffered number: ");
-					// userInput = alero.nextInt();
-			//}
+					System.out.println("Enter your preffered number: ");
+					userInput = alero.nextInt();
+			}
 			
 				
 }
-
+}
 
 }
 }
