@@ -11,3 +11,25 @@ public class MenstrualCycleApp {
     public void addCycleStart(LocalDate startDate) {
         this.startDate = startDate;
     }
+
+    public void addCycleEnd(LocalDate endDate) {
+        this.endDate = endDate;
+        calculateCycleLength();
+    }
+
+    public void calculateCycleLength() {
+        if (this.startDate != null && this.endDate != null) {
+            long cycleLength = ChronoUnit.DAYS.between(this.startDate, this.endDate);
+            System.out.println("Cycle length: " + cycleLength + " days");
+        }
+    }
+
+    public void predictNextCycle() {
+        if (this.endDate != null) {
+            LocalDate nextCycleStart = this.endDate.plusDays(AVERAGE_CYCLE_LENGTH);
+            System.out.println("Predicted next cycle start: " + nextCycleStart);
+        }
+    }
+
+   
+}
