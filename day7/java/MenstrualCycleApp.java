@@ -1,6 +1,7 @@
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.Scanner;
+import java.time.format.DateTimeFormatter;
 
 public class MenstrualCycleApp {
     private static final int AVERAGE_CYCLE_LENGTH = 28;
@@ -24,10 +25,12 @@ public class MenstrualCycleApp {
         }
     }
 
-    public void predictNextCycle() {
+   public void predictNextCycle() {
         if (this.endDate != null) {
             LocalDate nextCycleStart = this.endDate.plusDays(AVERAGE_CYCLE_LENGTH);
-            System.out.println("Predicted next cycle start: " + nextCycleStart);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+            String formattedDate = nextCycleStart.format(formatter);
+            System.out.println("Predicted next cycle start: " + formattedDate);
         }
     }
 
@@ -35,9 +38,10 @@ public class MenstrualCycleApp {
         Scanner scanner = new Scanner(System.in);
         MenstrualCycleApp app = new MenstrualCycleApp();
 
-        System.out.println("Enter the date of your last period (YYYY-MM-DD):");
+        System.out.println("Enter the date of your last period (dd-MM-yyyy):");
         String lastPeriodInput = scanner.nextLine();
-        LocalDate lastPeriod = LocalDate.parse(lastPeriodInput);
+	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        LocalDate lastPeriod = LocalDate.parse(lastPeriodInput, formatter);
         app.addCycleStart(lastPeriod);
 
 

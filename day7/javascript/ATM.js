@@ -8,17 +8,10 @@ let transfer = 0;
 
 const listOfTransactions = [];
 
-const prompt = require('prompt');
-const askQuestion = (question) => {
-  prompt.start();
-  return new Promise((resolve, reject) => {
-    prompt.get({ name: 'userInput', description: question }, (err, result) => {
-      if (err) reject(err);
-      else resolve(result.userInput);
-    });
-  });
-};
-
+const readline = require('readline').createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
 
 const mainMenu = `
 Welcome to Lero's Banking Platform
@@ -35,10 +28,14 @@ Press:
 `;
 
 
-const startBankingPlatform = async () => {
+const askQuestion = (question) => {
+  return new Promise((resolve, reject) => {
+    readline.question(question, (input) => resolve(input));
+  });
+};
   while (true) {
     console.log(mainMenu);
-    const userInput = await askQuestion('Enter your preferred number: ');
+    const userInput = ('Enter your preferred number: ');
     
     balance = deposit - withdraw - transfer;
 
@@ -46,11 +43,11 @@ const startBankingPlatform = async () => {
       case 1:
         console.log('To create new account');
 
-        const firstName = await askQuestion('Enter firstName: ');
+        const firstName = ('Enter firstName: ');
 
-        const lastName = await askQuestion('Enter lastName: ');
+        const lastName = ('Enter lastName: ');
 
-        const number = await askQuestion('Enter 4 numbers for pin: ');
+        const number = ('Enter 4 numbers for pin: ');
         if (number.length !== 4) {
           console.log('Invalid pin');
         } 
@@ -66,14 +63,14 @@ const startBankingPlatform = async () => {
         listOfTransactions.push('Account closed');
         break;
       case 3:
-        deposit = parseFloat(await askQuestion('Deposit money: '));
+        deposit = parseFloat('Deposit money: ');
 	 deposit += amountToDeposit;
         balance += amountToDeposit;
         console.log(`Balance: ${deposit}`);
         listOfTransactions.push(`Deposited: ${deposit}`);
         break;
       case 4:
-        withdraw = parseFloat(await askQuestion('Withdraw money: '));
+        withdraw = parseFloat('Withdraw money: ');
         console.log(`Balance: ${balance}`);
 	if (amountToWithdraw <= balance) {
           withdraw += amountToWithdraw;
@@ -88,7 +85,7 @@ const startBankingPlatform = async () => {
         console.log(`Check Account balance: ${balance}`);
         break;
       case 6:
-        transfer = parseFloat(await askQuestion('Amount to transfer: '));
+        transfer = parseFloat('Amount to transfer: ');
 	 if (amountToTransfer <= balance) {
           transfer += amountToTransfer;
           balance -= amountToTransfer;
@@ -100,7 +97,7 @@ const startBankingPlatform = async () => {
         }
         break;
       case 7:
-        const pin = await askQuestion('Change pin: ');
+        const pin = ('Change pin: ');
         console.log('Pin changed successfully');
         listOfTransactions.push('Pin changed');
         break;
@@ -118,7 +115,7 @@ const startBankingPlatform = async () => {
         console.log('Invalid option');
     }
   }
-}
 
 
-startBankingPlatform();
+
+
