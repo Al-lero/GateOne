@@ -31,5 +31,15 @@ public class MenstrualCycleApp {
         }
     }
 
-   
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        MenstrualCycleApp app = new MenstrualCycleApp();
+
+        System.out.println("Enter the date of your last period (YYYY-MM-DD):");
+        String lastPeriodInput = scanner.nextLine();
+        LocalDate lastPeriod = LocalDate.parse(lastPeriodInput);
+        app.addCycleStart(lastPeriod);
+
+
+}
 }
