@@ -15,15 +15,17 @@ public class MenstrualCycleApp {
 
     public void addCycleEnd(LocalDate endDate) {
         this.endDate = endDate;
-        calculateCycleLength();
+        //calculateCycleLength();
     }
 
     public void calculateCycleLength() {
         if (this.startDate != null && this.endDate != null) {
-            long cycleLength = ChronoUnit.DAYS.between(this.startDate, this.endDate);
-            System.out.println("Cycle length: " + cycleLength + " days");
-        }
-    }
+	    long cycleLength = ChronoUnit.DAYS.between(this.startDate, this.endDate);
+            System.out.println("Cycle length: " + cycleLength +" days");
+	    
+		
+        }   
+ }
 
    public void predictNextCycle() {
         if (this.endDate != null) {
@@ -38,11 +40,42 @@ public class MenstrualCycleApp {
         Scanner scanner = new Scanner(System.in);
         MenstrualCycleApp app = new MenstrualCycleApp();
 
-        System.out.println("Enter the date of your last period (dd-MM-yyyy):");
-        String lastPeriodInput = scanner.nextLine();
 	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        LocalDate lastPeriod = LocalDate.parse(lastPeriodInput, formatter);
+
+	String[] QuestionOne = {"A. Cramps  ", "B. Tender Breast ", "C. Bloating ", "D. Spotting ", "E. All of the above "};   
+	System.out.println("Which of these do you feel during before your period? ");
+	for(int count = 0; count < QuestionOne.length; count++) { 
+	System.out.println(QuestionOne[count]);}
+	String response = scanner.nextLine();
+
+	String[] QuestionTwo = {"A. Cranky  ", "B. Emotional ", "C. Forgetful ", "D. Stressed ", "E. All of the above "};   
+	System.out.println("How do you feel today ? ");
+	for(int count = 0; count < QuestionTwo.length; count++) { 
+	System.out.println(QuestionTwo[count]);}
+	String responseTwo = scanner.nextLine();
+
+        System.out.println("Enter the date of your last period started (dd-MM-yyyy): ");
+        String lastPeriodInput = scanner.nextLine();
+	LocalDate lastPeriod = LocalDate.parse(lastPeriodInput, formatter);
         app.addCycleStart(lastPeriod);
+
+	System.out.println("Enter the date when your last period ended (dd-MM-yyyy): ");
+        String endPeriodInput = scanner.nextLine();
+        LocalDate endPeriod = LocalDate.parse(endPeriodInput, formatter);
+        app.addCycleEnd(endPeriod);
+
+        app.calculateCycleLength();
+        app.predictNextCycle();
+
+	LocalDate nextPeriod = lastPeriod.plusDays(AVERAGE_CYCLE_LENGTH);
+        LocalDate ovulationDate = nextPeriod.minusDays(LUTEAL_PHASE_LENGTH);
+
+	LocalDate safePeriodStart = lastPeriod.plusDays(7);
+        LocalDate safePeriodEnd = ovulationDate.minusDays(4);
+
+	System.out.println("Safe period starts on: " + safePeriodStart.format(formatter) + " and ends on: " + safePeriodEnd.format(formatter));
+	System.out.println("Your estimated ovulation date is: " + ovulationDate.format(formatter));
+	System.out.println("Your next period is expected around: " + nextPeriod.format(formatter));
 
 
 }

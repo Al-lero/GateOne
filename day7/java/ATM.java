@@ -36,7 +36,7 @@ public class ATM {
             switch (userInput) {
                 case 1 -> {
                     System.out.println("To create new account");
-                    alero.nextLine(); // Consume the newline
+                    alero.nextLine(); 
                     System.out.println("Enter firstName: ");
                     String firstName = alero.nextLine();
 
