@@ -36,12 +36,24 @@ public class MenstrualCycleApp {
         }
     }
 
+    public static boolean isCycleLongEnough(LocalDate startDate, LocalDate endDate, int averageCycleLengthDays) {
+        long cycleLength = ChronoUnit.DAYS.between(startDate, endDate);
+        return cycleLength >= averageCycleLengthDays;
+    }
+
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         MenstrualCycleApp app = new MenstrualCycleApp();
+	int averageCycleLength = 28;
 
 	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-
+	
+	String phrase = """
+		A period is the part of the menstrual cycle when a woman bleeds from her vagina for a few days. For most women this happens every 28 days or so, but it's common for periods to be more or less frequent than this, ranging from every 23 days to every 35 days.
+	""";
+	System.out.println(phrase);
+	
 	String[] QuestionOne = {"A. Cramps  ", "B. Tender Breast ", "C. Bloating ", "D. Spotting ", "E. All of the above "};   
 	System.out.println("Which of these do you feel during before your period? ");
 	for(int count = 0; count < QuestionOne.length; count++) { 
@@ -49,7 +61,7 @@ public class MenstrualCycleApp {
 	String response = scanner.nextLine();
 
 	String[] QuestionTwo = {"A. Cranky  ", "B. Emotional ", "C. Forgetful ", "D. Stressed ", "E. All of the above "};   
-	System.out.println("How do you feel today ? ");
+	System.out.println("How are you feeling today ? ");
 	for(int count = 0; count < QuestionTwo.length; count++) { 
 	System.out.println(QuestionTwo[count]);}
 	String responseTwo = scanner.nextLine();
@@ -67,14 +79,24 @@ public class MenstrualCycleApp {
         app.calculateCycleLength();
         app.predictNextCycle();
 
+	boolean isLongEnough = isCycleLongEnough(lastPeriod, endPeriod, averageCycleLength);
+        if (isLongEnough) {
+            System.out.println("The menstrual cycle is 28 days or longer.");
+        } else {
+            System.out.println("The menstrual cycle is shorter than 28 days.");
+	}
+
 	LocalDate nextPeriod = lastPeriod.plusDays(AVERAGE_CYCLE_LENGTH);
         LocalDate ovulationDate = nextPeriod.minusDays(LUTEAL_PHASE_LENGTH);
 
 	LocalDate safePeriodStart = lastPeriod.plusDays(7);
         LocalDate safePeriodEnd = ovulationDate.minusDays(4);
-
+	
+	System.out.println();
 	System.out.println("Safe period starts on: " + safePeriodStart.format(formatter) + " and ends on: " + safePeriodEnd.format(formatter));
+	System.out.println();
 	System.out.println("Your estimated ovulation date is: " + ovulationDate.format(formatter));
+	System.out.println();
 	System.out.println("Your next period is expected around: " + nextPeriod.format(formatter));
 
 
